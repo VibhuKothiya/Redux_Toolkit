@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { add } from '../store/cartSlice'
+import { getData } from '../store/productSlice'
 
 const Products = () => {
     const dispatch = useDispatch();
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
+    const {data : products, status} = useSelector((state) => state.product)
 
     useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch('https://fakestoreapi.com/products');
-            const data = await res.json();
-            console.log(data);
-            setProducts(data)
-        }
+        dispatch(getData())
+        // const fetchData = async () => {
+        //     const res = await fetch('https://fakestoreapi.com/products');
+        //     const data = await res.json();
+        //     console.log(data);
+        //     setProducts(data)
+        // }
 
-        fetchData();
+        // fetchData();
     }, [])
 
     const handleAdd = (val) => {
